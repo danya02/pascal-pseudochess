@@ -1,6 +1,7 @@
 {begin data_types.pp}
 type cell = record
               occupied:boolean;
+              piece:string;
               score:integer;
               alignment:integer;
               hit_by_1:boolean;

@@ -24,6 +24,7 @@ begin
       b.board[icoord1][icoord2].occupied:=true;
       b.board[icoord1][icoord2].alignment:=alignment;
       b.board[icoord1][icoord2].score:=piece2score(piece);
+      b.board[icoord1][icoord2].piece:=piece;
       if alignment = b.my_alignment then
         begin
           case piece of 
@@ -33,7 +34,7 @@ begin
             'R':dec(rooks);
             'Q':dec(queens);
             'K':dec(kings);
-            else writeln('WTF?! Piece ',piece,' not found!');
+            else wtf('Piece '+piece+' not found!');
           end;
         end;
     end;

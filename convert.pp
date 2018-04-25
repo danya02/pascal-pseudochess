@@ -9,7 +9,7 @@ begin
     'B':piece2score:=3;
     'P':piece2score:=1;
     else begin
-      writeln('WTF! Piece ',p,' unknown!');
+      wtf('Piece '+p+' unknown!');
       piece2score:=-666;
     end;
   end;
@@ -27,7 +27,7 @@ begin
     'G':cell2int:=7;
     'H':cell2int:=8;
     else begin
-      writeln('WTF! Cell letter ',c,' unknown!');
+      wtf('Cell letter '+c+' unknown!');
       cell2int:=1;
     end;
   end;
