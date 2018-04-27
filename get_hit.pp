@@ -36,7 +36,7 @@ begin
                        if not lim4 then
                          mark_as_hit(p,i+k,j+k,alignment);
                      end;
-              'K': begin
+              'N': begin
                      mark_as_hit(p,i+2,j+1,alignment);                   
                      mark_as_hit(p,i+2,j-1,alignment);                   
                      mark_as_hit(p,i+1,j+2,alignment);                   
@@ -48,21 +48,45 @@ begin
                    end;
               'R': for k:=1 to 8 do
                      begin
-                       mark_as_hit(p,i-k,j,alignment);
-                       mark_as_hit(p,i+k,j,alignment);
-                       mark_as_hit(p,i,j-k,alignment);
-                       mark_as_hit(p,i,j+k,alignment);
+                       lim1:=lim1 or p.board[i-k][j].occupied;
+                       lim2:=lim2 or p.board[i+k][j].occupied;
+                       lim3:=lim3 or p.board[i][j-k].occupied;
+                       lim4:=lim4 or p.board[i][j+k].occupied;
+                       if not lim4 then
+                         mark_as_hit(p,i-k,j,alignment);
+                       if not lim4 then
+                         mark_as_hit(p,i+k,j,alignment);
+                       if not lim4 then
+                         mark_as_hit(p,i,j-k,alignment);
+                       if not lim4 then
+                         mark_as_hit(p,i,j+k,alignment);
                      end;
               'Q': for k:=1 to 8 do
                      begin
-                       mark_as_hit(p,i-k,j-k,alignment);
-                       mark_as_hit(p,i-k,j+k,alignment);
-                       mark_as_hit(p,i+k,j-k,alignment);
-                       mark_as_hit(p,i+k,j+k,alignment);
-                       mark_as_hit(p,i-k,j,alignment);
-                       mark_as_hit(p,i+k,j,alignment);
-                       mark_as_hit(p,i,j-k,alignment);
-                       mark_as_hit(p,i,j+k,alignment);
+                       lim1:=lim1 or p.board[i-k][j-k].occupied;
+                       lim2:=lim2 or p.board[i-k][j+k].occupied;
+                       lim3:=lim3 or p.board[i+k][j-k].occupied;
+                       lim4:=lim4 or p.board[i+k][j+k].occupied;
+                       lim5:=lim5 or p.board[i-k][j].occupied;
+                       lim6:=lim6 or p.board[i+k][j].occupied;
+                       lim7:=lim7 or p.board[i][j-k].occupied;
+                       lim8:=lim8 or p.board[i][j+k].occupied;
+                       if not lim1 then
+                         mark_as_hit(p,i-k,j-k,alignment);
+                       if not lim2 then
+                         mark_as_hit(p,i-k,j+k,alignment);
+                       if not lim3 then
+                         mark_as_hit(p,i+k,j-k,alignment);
+                       if not lim4 then
+                         mark_as_hit(p,i+k,j+k,alignment);
+                       if not lim5 then
+                         mark_as_hit(p,i-k,j,alignment);
+                       if not lim6 then
+                         mark_as_hit(p,i+k,j,alignment);
+                       if not lim7 then
+                         mark_as_hit(p,i,j-k,alignment);
+                       if not lim8 then
+                         mark_as_hit(p,i,j+k,alignment);
                      end;
               'K': begin
                      mark_as_hit(p,i+1,j+1,alignment);
