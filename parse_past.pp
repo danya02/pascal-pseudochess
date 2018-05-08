@@ -38,37 +38,36 @@ begin
           end;
         end;
     end;
-  for i:=0 to 16 do
-    b.my_pieces[i]:=0;
+  b.my_pieces_num:=0;
   for i:=1 to pawns do
     begin
-      inc(b.my_pieces[0]);
-      b.my_pieces[b.my_pieces[0]]:=1;
+      inc(b.my_pieces_num);
+      b.my_pieces[b.my_pieces_num]:='P';
     end;
   for i:=1 to bshops do
     begin
-      inc(b.my_pieces[0]);
-      b.my_pieces[b.my_pieces[0]]:=3;
+      inc(b.my_pieces_num);
+      b.my_pieces[b.my_pieces_num]:='B';
     end;
   for i:=1 to knights do
     begin
-      inc(b.my_pieces[0]);
-      b.my_pieces[b.my_pieces[0]]:=3;
+      inc(b.my_pieces_num);
+      b.my_pieces[b.my_pieces_num]:='N';
     end;
   for i:=1 to rooks do
     begin
-      inc(b.my_pieces[0]);
-      b.my_pieces[b.my_pieces[0]]:=5;
+      inc(b.my_pieces_num);
+      b.my_pieces[b.my_pieces_num]:='R';
     end;
   for i:=1 to queens do
     begin
-      inc(b.my_pieces[0]);
-      b.my_pieces[b.my_pieces[0]]:=8;
+      inc(b.my_pieces_num);
+      b.my_pieces[b.my_pieces_num]:='Q';
     end;
   for i:=1 to kings do
     begin
-      inc(b.my_pieces[0]);
-      b.my_pieces[b.my_pieces[0]]:=9;
+      inc(b.my_pieces_num);
+      b.my_pieces[b.my_pieces_num]:='K';
     end;
 end;
 {end parse_past.pp}

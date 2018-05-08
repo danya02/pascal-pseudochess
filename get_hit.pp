@@ -15,12 +15,21 @@ var lim1,lim2,lim3,lim4,lim5,lim6,lim7,lim8:boolean;
 begin
   for i:=1 to 8 do
     for j:=1 to 8 do
+      begin
+        p.board[i][j].hit_by_1:=false;
+        p.board[i][j].hit_by_2:=false;
+      end;
+  for i:=1 to 8 do
+    for j:=1 to 8 do
       begin lim1:=false;lim2:=false;lim3:=false;lim4:=false;lim5:=false;lim6:=false;lim7:=false;lim8:=false;
        if p.board[i][j].occupied then
         begin
           with p.board[i][j] do
             case piece of
-              'P': begin mark_as_hit(p,i-1,j-(alignment-2),alignment); mark_as_hit(p,i+1,j-(alignment-2),alignment); end;
+              'P': begin
+                     mark_as_hit(p,i-1,j-(alignment-2),alignment);
+                     mark_as_hit(p,i+1,j-(alignment-2),alignment);
+                   end;
               'B': for k:=1 to 8 do
                      begin
                        lim1:=lim1 or p.board[i-k][j-k].occupied;
@@ -98,8 +107,29 @@ begin
                      mark_as_hit(p,i+1,j-1,alignment);
                      mark_as_hit(p,i+1,j,alignment);
                    end;
-              else: wtf('Piece '+piece+' doesn't exist!');
+              end;
             end;
-        end;end;
+        end;
+end;
+
+function get_hit_scores(b:chessboard):scores;
+var csc:scores;
+var x,y:integer;
+begin
+  get_hit(b);
+  csc.score_of_1:=0;
+  csc.score_of_2:=0;
+  for x:=1 to 8 do
+    for y:=1 to 8 do
+      if b.board[x][y].occupied then
+        begin
+          if b.board[x][y].alignment=1 then
+            if b.board[x][y].hit_by_2 then
+              csc.score_of_2:=csc.score_of_2+piece2score(b.board[x][y].piece);
+          if b.board[x][y].alignment=2 then
+            if b.board[x][y].hit_by_1 then
+              csc.score_of_1:=csc.score_of_1+piece2score(b.board[x][y].piece);
+        end;
+  get_hit_scores:=csc;
 end;
 {end get_hit.pp}
