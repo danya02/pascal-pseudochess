@@ -25,12 +25,12 @@ begin
        if p.board[i][j].occupied then
         begin
           with p.board[i][j] do
-            case piece of
-              'P': begin
+            case ord(piece) of
+              80: begin {P}
                      mark_as_hit(p,i-1,j-(alignment-2),alignment);
                      mark_as_hit(p,i+1,j-(alignment-2),alignment);
                    end;
-              'B': for k:=1 to 8 do
+              66: for k:=1 to 8 do {B}
                      begin
                        lim1:=lim1 or p.board[i-k][j-k].occupied;
                        lim2:=lim2 or p.board[i-k][j+k].occupied;
@@ -45,7 +45,7 @@ begin
                        if not lim4 then
                          mark_as_hit(p,i+k,j+k,alignment);
                      end;
-              'N': begin
+              78: begin {N}
                      mark_as_hit(p,i+2,j+1,alignment);                   
                      mark_as_hit(p,i+2,j-1,alignment);                   
                      mark_as_hit(p,i+1,j+2,alignment);                   
@@ -55,7 +55,7 @@ begin
                      mark_as_hit(p,i-1,j+2,alignment);                   
                      mark_as_hit(p,i-1,j-2,alignment);                   
                    end;
-              'R': for k:=1 to 8 do
+              82: for k:=1 to 8 do {R}
                      begin
                        lim1:=lim1 or p.board[i-k][j].occupied;
                        lim2:=lim2 or p.board[i+k][j].occupied;
@@ -70,7 +70,7 @@ begin
                        if not lim4 then
                          mark_as_hit(p,i,j+k,alignment);
                      end;
-              'Q': for k:=1 to 8 do
+              81: for k:=1 to 8 do {Q}
                      begin
                        lim1:=lim1 or p.board[i-k][j-k].occupied;
                        lim2:=lim2 or p.board[i-k][j+k].occupied;
@@ -97,7 +97,7 @@ begin
                        if not lim8 then
                          mark_as_hit(p,i,j+k,alignment);
                      end;
-              'K': begin
+              75: begin {K}
                      mark_as_hit(p,i+1,j+1,alignment);
                      mark_as_hit(p,i,j+1,alignment);
                      mark_as_hit(p,i-1,j+1,alignment);
