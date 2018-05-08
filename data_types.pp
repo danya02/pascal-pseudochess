@@ -7,6 +7,15 @@ type cell = record
               hit_by_1:boolean;
               hit_by_2:boolean;
             end;
+
+{
+m     m   mm   mmmmm  mm   m mmmmm  mm   m   mmm
+#  #  #   ##   #   "# #"m  #   #    #"m  # m"   "
+" #"# #  #  #  #mmmm" # #m #   #    # #m # #   mm
+ ## ##"  #mm#  #   "m #  # #   #    #  # # #    #
+ #   #  #    # #    " #   ## mm#mm  #   ##  "mmm"
+
+Do NOT edit this without editing convert.pp!!!}
 type chessboard = record
                     board:array[1..8] of array[1..8] of cell;
                     my_alignment:integer;
