@@ -1,7 +1,6 @@
 {begin main.pp}
 var b:chessboard;
 begin
-  parse_past(b);
-  output_board(b);
+  writeln(run_solver);
 end.
 {end main.pp}

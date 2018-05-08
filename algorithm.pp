@@ -1,6 +1,6 @@
 {begin algorithm.pp}
 function greedy_solver(b:chessboard):move;
-var x,y:integer;
+var x,y,i:integer;
 var start_score,max_my_score,min_other_score,current_score:scores;
 var max_my_move,min_other_move,current_move:move;
 var edit_board:chessboard;
@@ -13,10 +13,10 @@ begin
   for x:=1 to 8 do
     for y:=1 to 8 do
       if not b.board[x][y].occupied then
-        for pi:=1 to b.my_pieces_num do
+        for i:=1 to b.my_pieces_num do
           begin
             edit_board:=shallow_board(b);
-            current_move.piece = b.my_pieces[pi];
+            current_move.piece := b.my_pieces[i];
             current_move.x:=x;
             current_move.y:=y;
             apply_move(edit_board,current_move);
@@ -34,12 +34,12 @@ begin
           end;
   if delta_score(b,max_my_score,min_other_score)>0 then
     begin
-      d('Decided that my score will be higher.');
+      debug('Decided that my score will be higher.');
       greedy_solver:=max_my_move;
     end
   else
     begin
-      d('Decided that other score will be lower.');
+      debug('Decided that other score will be lower.');
       greedy_solver:=min_other_move;
     end;
 end;

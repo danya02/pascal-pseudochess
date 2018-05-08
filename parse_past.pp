@@ -27,13 +27,13 @@ begin
       b.board[icoord1][icoord2].piece:=piece;
       if alignment = b.my_alignment then
         begin
-          case piece of 
-            'P':dec(pawns);
-            'B':dec(bshops);
-            'N':dec(knights);
-            'R':dec(rooks);
-            'Q':dec(queens);
-            'K':dec(kings);
+          case ord(piece[1]) of 
+            80:dec(pawns);
+            66:dec(bshops);
+            78:dec(knights);
+            82:dec(rooks);
+            81:dec(queens);
+            75:dec(kings);
             else wtf('Piece '+piece+' not found!');
           end;
         end;

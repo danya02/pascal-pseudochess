@@ -25,7 +25,7 @@ begin
        if p.board[i][j].occupied then
         begin
           with p.board[i][j] do
-            case ord(piece) of
+            case ord(piece[0]) of
               80: begin {P}
                      mark_as_hit(p,i-1,j-(alignment-2),alignment);
                      mark_as_hit(p,i+1,j-(alignment-2),alignment);

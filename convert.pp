@@ -15,6 +15,7 @@ begin
   b1.my_alignment:=b.my_alignment;
   for i:=0 to 16 do b1.my_pieces[i]:=b.my_pieces[i];
   b1.my_pieces_num:=b.my_pieces_num;
+  shallow_board:=b1;
 end;
 
 function piece2score(p:string):integer;
@@ -35,22 +36,47 @@ end;
 
 function cell2int(c:string):integer;
 begin
-  case c of
-    'A':cell2int:=1;
-    'B':cell2int:=2;
-    'C':cell2int:=3;
-    'D':cell2int:=4;
-    'E':cell2int:=5;
-    'F':cell2int:=6;
-    'G':cell2int:=7;
-    'H':cell2int:=8;
+  case ord(c[1]) of {Below, ords from A to H}
+    65:cell2int:=1;
+    66:cell2int:=2;
+    67:cell2int:=3;
+    68:cell2int:=4;
+    69:cell2int:=5;
+    70:cell2int:=6;
+    71:cell2int:=7;
+    72:cell2int:=8;
     else begin
       wtf('Cell letter '+c+' unknown!');
       cell2int:=1;
     end;
   end;
 end;
+function int2cell(c:integer):string;
+begin
+  case c of
+    1:int2cell:='A';
+    2:int2cell:='B';
+    3:int2cell:='C';
+    4:int2cell:='D';
+    5:int2cell:='E';
+    6:int2cell:='F';
+    7:int2cell:='G';
+    8:int2cell:='H';
+    else begin
+      wtf('Cell number '+inttostr(c)+' unknown!');
+      int2cell:='W';
+    end;
+  end;
+end;
 
+function move2string(m:move):string;
+var s:string;
+begin
+  s:=m.piece;
+  s:=s+int2cell(m.x);
+  s:=s+inttostr(m.y);
+  move2string:=s;
+end;
 procedure apply_move(var b:chessboard; m:move);
 begin
   b.board[m.x][m.y].piece:=m.piece;

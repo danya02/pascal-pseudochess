@@ -9,7 +9,8 @@ concat: clean
 	cat score_actions.pp >> outp.pp
 	cat parse_past.pp >> outp.pp
 	cat get_hit.pp >> outp.pp
-        cat algorithm.pp >> outp.pp
+	cat algorithm.pp >> outp.pp
+	cat run_solver.pp >> outp.pp
 	cat main.pp >> outp.pp
 clean:
 	rm -f outp*
