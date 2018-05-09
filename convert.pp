@@ -20,13 +20,13 @@ end;
 
 function piece2score(p:string):integer;
 begin
-  case p of
-    'K':piece2score:=9;
-    'Q':piece2score:=8;
-    'R':piece2score:=5;
-    'N':piece2score:=3;
-    'B':piece2score:=3;
-    'P':piece2score:=1;
+  case ord(p[1]) of
+    75:piece2score:=9; {K}
+    81:piece2score:=8; {Q}
+    82:piece2score:=5; {R}
+    78:piece2score:=3; {N}
+    66:piece2score:=3; {B}
+    80:piece2score:=1; {P}
     else begin
       wtf('Piece '+p+' unknown!');
       piece2score:=-666;
