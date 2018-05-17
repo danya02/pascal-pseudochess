@@ -8,9 +8,9 @@ begin
   pawns:=8;bshops:=2;knights:=2;rooks:=2;queens:=1;kings:=1;
   assign(fdesc,'cond.txt');
   reset(fdesc);
-  read(fdesc,m);
+  readln(fdesc,m);
   b.my_alignment:=1;
-  if m mod 2<>0 then
+  if m mod 2=1 then
     b.my_alignment:=2;
   for i:=1 to m do
     begin
@@ -18,9 +18,9 @@ begin
       piece:=copy(move,1,1);
       coord1:=copy(move,2,1);
       coord2:=copy(move,3,1);
-      alignment:=1 + (i mod 2);
+      alignment:=1+(i mod 2);
       icoord1:=cell2int(coord1);
-      icoord2:=strtoint(coord2);
+      icoord2:=9-strtoint(coord2);
       b.board[icoord1][icoord2].occupied:=true;
       b.board[icoord1][icoord2].alignment:=alignment;
       b.board[icoord1][icoord2].score:=piece2score(piece);
@@ -34,7 +34,7 @@ begin
             82:dec(rooks);
             81:dec(queens);
             75:dec(kings);
-            else wtf('Piece '+piece+' not found!');
+            else wtf('Piece "'+piece+'" not found!');
           end;
         end;
     end;

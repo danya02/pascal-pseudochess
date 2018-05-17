@@ -1,9 +1,10 @@
 {begin algorithm.pp}
-function greedy_solver(b:chessboard):move;
+function greedy_solver(var b:chessboard):move;
 var x,y,i:integer;
 var start_score,max_my_score,min_other_score,current_score:scores;
 var max_my_move,min_other_move,current_move:move;
 var edit_board:chessboard;
+var s:string;
 begin
   max_my_score.score_of_1:=0;
   max_my_score.score_of_2:=0;
@@ -32,6 +33,8 @@ begin
                 min_other_move:=current_move;
               end;
           end;
+  output_alt_moves(max_my_score,min_other_score);
+  readln(s);
   if delta_score(b,max_my_score,min_other_score)>0 then
     begin
       debug('Decided that my score will be higher.');

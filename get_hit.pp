@@ -9,9 +9,85 @@ begin
     else wtf('There is no alignment '+inttostr(alignment)+'!');
   end;
 end;
+procedure pawn(i,j,alignment:integer; var p:chessboard);
+begin
+  mark_as_hit(p,i-1,j-(alignment-2),alignment);
+  mark_as_hit(p,i+1,j-(alignment-2),alignment);
+end;
+procedure rook(i,j,alignment:integer; var p:chessboard);
+var lim1,lim2,lim3,lim4:boolean;
+var k:integer;
+begin
+  if (i-k>0) then                     
+    lim1:=lim1 or p.board[i-k][j].occupied;
+  if (i+k<9) then
+    lim2:=lim2 or p.board[i+k][j].occupied;
+  if (j-k>0) then
+    lim3:=lim3 or p.board[i][j-k].occupied;
+  if (j+k<9) then
+    lim4:=lim4 or p.board[i][j+k].occupied;
+  if not lim4 then
+    mark_as_hit(p,i-k,j,alignment);
+  if not lim4 then
+    mark_as_hit(p,i+k,j,alignment);
+  if not lim4 then
+    mark_as_hit(p,i,j-k,alignment);
+  if not lim4 then
+    mark_as_hit(p,i,j+k,alignment);
+end;
+procedure bishie(i,j,alignment:integer; var p:chessboard);
+var lim1,lim2,lim3,lim4:boolean;
+var k:integer;
+begin 
+  for k:=1 to 8 do 
+    begin
+      if (i-k>0) and (j-k>0) then                     
+        lim1:=lim1 or p.board[i-k][j-k].occupied;
+      if (i-k>0) and (j+k<9) then
+        lim2:=lim2 or p.board[i-k][j+k].occupied;
+      if (i+k<9) and (j-k>0) then
+        lim3:=lim3 or p.board[i+k][j-k].occupied;
+      if (i+k<9) and (j+k<9) then
+        lim4:=lim4 or p.board[i+k][j+k].occupied;
+      if not lim1 then
+        mark_as_hit(p,i-k,j-k,alignment);
+      if not lim2 then
+        mark_as_hit(p,i-k,j+k,alignment);
+      if not lim3 then
+        mark_as_hit(p,i+k,j-k,alignment);
+      if not lim4 then
+        mark_as_hit(p,i+k,j+k,alignment);
+    end;
+end;
+procedure knight(i,j,alignment:integer; var p:chessboard);
+begin
+  mark_as_hit(p,i+2,j+1,alignment);                   
+  mark_as_hit(p,i+2,j-1,alignment);                   
+  mark_as_hit(p,i+1,j+2,alignment);                   
+  mark_as_hit(p,i+1,j-2,alignment);                   
+  mark_as_hit(p,i-2,j+1,alignment);                   
+  mark_as_hit(p,i-2,j-1,alignment);                   
+  mark_as_hit(p,i-1,j+2,alignment);                   
+  mark_as_hit(p,i-1,j-2,alignment);                   
+end;
+procedure queen(i,j,alignment:integer; var p:chessboard);
+begin
+  rook(i,j,alignment,p);
+  bishie(i,j,alignment,p);
+end;
+procedure king(i,j,alignment:integer; var p:chessboard);
+begin
+  mark_as_hit(p,i+1,j+1,alignment);                   
+  mark_as_hit(p,i+1,j,alignment);                   
+  mark_as_hit(p,i+1,j-1,alignment);                   
+  mark_as_hit(p,i,j-1,alignment);                   
+  mark_as_hit(p,i-1,j-1,alignment);                   
+  mark_as_hit(p,i-1,j,alignment);                   
+  mark_as_hit(p,i-1,j+1,alignment);                   
+  mark_as_hit(p,i,j+1,alignment); 
+end;
 procedure get_hit(var p:chessboard);
-var i,j,k:integer;
-var lim1,lim2,lim3,lim4,lim5,lim6,lim7,lim8:boolean;
+var i,j:integer;
 begin
   for i:=1 to 8 do
     for j:=1 to 8 do
@@ -21,98 +97,22 @@ begin
       end;
   for i:=1 to 8 do
     for j:=1 to 8 do
-      begin lim1:=false;lim2:=false;lim3:=false;lim4:=false;lim5:=false;lim6:=false;lim7:=false;lim8:=false;
-       if p.board[i][j].occupied then
+      if p.board[i][j].occupied then
         begin
           with p.board[i][j] do
-            case ord(piece[0]) of
-              80: begin {P}
-                     mark_as_hit(p,i-1,j-(alignment-2),alignment);
-                     mark_as_hit(p,i+1,j-(alignment-2),alignment);
-                   end;
-              66: for k:=1 to 8 do {B}
-                     begin
-                       lim1:=lim1 or p.board[i-k][j-k].occupied;
-                       lim2:=lim2 or p.board[i-k][j+k].occupied;
-                       lim3:=lim3 or p.board[i+k][j-k].occupied;
-                       lim4:=lim4 or p.board[i+k][j+k].occupied;
-                       if not lim1 then
-                         mark_as_hit(p,i-k,j-k,alignment);
-                       if not lim2 then
-                         mark_as_hit(p,i-k,j+k,alignment);
-                       if not lim3 then
-                         mark_as_hit(p,i+k,j-k,alignment);
-                       if not lim4 then
-                         mark_as_hit(p,i+k,j+k,alignment);
-                     end;
-              78: begin {N}
-                     mark_as_hit(p,i+2,j+1,alignment);                   
-                     mark_as_hit(p,i+2,j-1,alignment);                   
-                     mark_as_hit(p,i+1,j+2,alignment);                   
-                     mark_as_hit(p,i+1,j-2,alignment);                   
-                     mark_as_hit(p,i-2,j+1,alignment);                   
-                     mark_as_hit(p,i-2,j-1,alignment);                   
-                     mark_as_hit(p,i-1,j+2,alignment);                   
-                     mark_as_hit(p,i-1,j-2,alignment);                   
-                   end;
-              82: for k:=1 to 8 do {R}
-                     begin
-                       lim1:=lim1 or p.board[i-k][j].occupied;
-                       lim2:=lim2 or p.board[i+k][j].occupied;
-                       lim3:=lim3 or p.board[i][j-k].occupied;
-                       lim4:=lim4 or p.board[i][j+k].occupied;
-                       if not lim4 then
-                         mark_as_hit(p,i-k,j,alignment);
-                       if not lim4 then
-                         mark_as_hit(p,i+k,j,alignment);
-                       if not lim4 then
-                         mark_as_hit(p,i,j-k,alignment);
-                       if not lim4 then
-                         mark_as_hit(p,i,j+k,alignment);
-                     end;
-              81: for k:=1 to 8 do {Q}
-                     begin
-                       lim1:=lim1 or p.board[i-k][j-k].occupied;
-                       lim2:=lim2 or p.board[i-k][j+k].occupied;
-                       lim3:=lim3 or p.board[i+k][j-k].occupied;
-                       lim4:=lim4 or p.board[i+k][j+k].occupied;
-                       lim5:=lim5 or p.board[i-k][j].occupied;
-                       lim6:=lim6 or p.board[i+k][j].occupied;
-                       lim7:=lim7 or p.board[i][j-k].occupied;
-                       lim8:=lim8 or p.board[i][j+k].occupied;
-                       if not lim1 then
-                         mark_as_hit(p,i-k,j-k,alignment);
-                       if not lim2 then
-                         mark_as_hit(p,i-k,j+k,alignment);
-                       if not lim3 then
-                         mark_as_hit(p,i+k,j-k,alignment);
-                       if not lim4 then
-                         mark_as_hit(p,i+k,j+k,alignment);
-                       if not lim5 then
-                         mark_as_hit(p,i-k,j,alignment);
-                       if not lim6 then
-                         mark_as_hit(p,i+k,j,alignment);
-                       if not lim7 then
-                         mark_as_hit(p,i,j-k,alignment);
-                       if not lim8 then
-                         mark_as_hit(p,i,j+k,alignment);
-                     end;
-              75: begin {K}
-                     mark_as_hit(p,i+1,j+1,alignment);
-                     mark_as_hit(p,i,j+1,alignment);
-                     mark_as_hit(p,i-1,j+1,alignment);
-                     mark_as_hit(p,i-1,j,alignment);
-                     mark_as_hit(p,i-1,j-1,alignment);
-                     mark_as_hit(p,i,j-1,alignment);
-                     mark_as_hit(p,i+1,j-1,alignment);
-                     mark_as_hit(p,i+1,j,alignment);
-                   end;
+            case ord(piece[1]) of
+              80: pawn(i,j,alignment,p); {P}
+              82: rook(i,j,alignment,p); {R}
+              66: bishie(i,j,alignment,p); {B}
+              78: knight(i,j,alignment,p); {N}
+              81: queen(i,j,alignment,p); {Q}
+              75: king(i,j,alignment,p); {K}
+              else wtf('Unknown piece "'+piece+'" encountered while parsing hits!'); 
               end;
             end;
-        end;
-end;
+ end;
 
-function get_hit_scores(b:chessboard):scores;
+function get_hit_scores(var b:chessboard):scores;
 var csc:scores;
 var x,y:integer;
 begin

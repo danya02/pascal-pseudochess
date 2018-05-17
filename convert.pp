@@ -36,6 +36,7 @@ end;
 
 function cell2int(c:string):integer;
 begin
+if length(c)=0 then wtf('Length zero!') else
   case ord(c[1]) of {Below, ords from A to H}
     65:cell2int:=1;
     66:cell2int:=2;

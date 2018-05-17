@@ -22,3 +22,5 @@ compile-fpc:
 
 compile-abc:
 	mono compiler/pabcnetc.exe outp.pas
+deconcat:
+	python3 deconcat.py
